@@ -6,23 +6,21 @@ import DashboardChart from "@/components/dashboard-chart";
 import { authSession, requireAuth } from "@/lib/auth-utils";
 import { Rocket } from "lucide-react";
 import Link from "next/link";
+import type { Post } from "@prisma/client";
 
-type Post = {
-  views?: number | null;
-};
+export const dynamic = "force-dynamic";
 
-  export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   await requireAuth();
   const session = await authSession();
-  const posts: Post[]  = await getPostsByUser();
+
+  const posts: Post[] = await getPostsByUser();
   const categories = await getCategoriesWithUser();
 
-
-const totalViews = posts.reduce<number>(
-  (acc, item) => acc + (item.views ?? 0),
-  0
-);
+  const totalViews = posts.reduce(
+    (acc, item) => acc + item.views,
+    0
+  );
 
   return (
     <div className="flex flex-1 flex-col">
@@ -35,8 +33,11 @@ const totalViews = posts.reduce<number>(
           <span>Visit public site</span>
           <Rocket />
         </Link>
-        <h1 className="font-semibold text-2xl">Hi, {session?.user.name}</h1>
+        <h1 className="font-semibold text-2xl">
+          Hi, {session?.user.name}
+        </h1>
       </div>
+
       <div className="container flex flex-1 flex-col gap-2">
         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
           <DashboardCard
