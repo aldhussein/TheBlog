@@ -7,11 +7,15 @@ import { authSession, requireAuth } from "@/lib/auth-utils";
 import { Rocket } from "lucide-react";
 import Link from "next/link";
 
+type Post = {
+  views?: number | null;
+};
+
   export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   await requireAuth();
   const session = await authSession();
-  const posts = await getPostsByUser();
+  const posts: Post[]  = await getPostsByUser();
   const categories = await getCategoriesWithUser();
 
 
