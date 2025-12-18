@@ -15,8 +15,10 @@ export default async function DashboardPage() {
   const categories = await getCategoriesWithUser();
 
 
-
-  const totalViews = posts.reduce((acc, item) => acc + item.views!, 0);
+const totalViews = posts.reduce<number>(
+  (acc, item) => acc + (item.views ?? 0),
+  0
+);
 
   return (
     <div className="flex flex-1 flex-col">
