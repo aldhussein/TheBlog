@@ -6,7 +6,7 @@ import DashboardChart from "@/components/dashboard-chart";
 import { authSession, requireAuth } from "@/lib/auth-utils";
 import { Rocket } from "lucide-react";
 import Link from "next/link";
-import type { Post } from "@prisma/client";
+import type { Post } from "@/lib/generated/prisma"; 
 
 export const dynamic = "force-dynamic";
 
